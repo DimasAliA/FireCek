@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "709147457960",
+    "firebase_url": "https://firecek-6bb67-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "firecek-6bb67",
+    "storage_bucket": "firecek-6bb67.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709147457960:android:f528307e408f2fe465c59d",
+        "android_client_info": {
+          "package_name": "com.example.iot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz1xsqO1XjN0KZaJriDUK6xxAk8sRczEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
