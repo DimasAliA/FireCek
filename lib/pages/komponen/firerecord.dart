@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 class FireRecord {
   final String day;
@@ -80,10 +81,15 @@ class _FireRecordsState extends State<FireRecords> {
               stream: databaseRef.onValue,
               builder: (context, snapshot) {
                 if (snapshot.hasData && !snapshot.hasError) {
-                  List<FireRecord> records = [];
                   Map<dynamic, dynamic> values = snapshot.data?.snapshot.value as Map<dynamic, dynamic>? ?? {};
-                  values.forEach((key, value) {
-                    records.add(FireRecord.fromMap(Map<dynamic, dynamic>.from(value)));
+                  List<FireRecord> records = values.entries.map((entry) {
+                    return FireRecord.fromMap(Map<dynamic, dynamic>.from(entry.value));
+                  }).toList();
+                  records.sort((a, b) {
+                    DateFormat dateFormat = DateFormat('d MMMM yyyy HH:mm', 'id_ID');
+                    DateTime aDateTime = dateFormat.parse(a.date + ' ' + a.time);
+                    DateTime bDateTime = dateFormat.parse(b.date + ' ' + b.time);
+                    return bDateTime.compareTo(aDateTime);
                   });
                   return ListView(
                     shrinkWrap: true,

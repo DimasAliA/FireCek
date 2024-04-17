@@ -29,9 +29,13 @@ class HomePage extends StatelessWidget {
   }
 
   Stream<Map<dynamic, dynamic>> get realtimeDataStream {
-    return databaseReference.onValue.map((event) {
-      return Map<dynamic, dynamic>.from(event.snapshot.value as Map);
-    });
+  return databaseReference.onValue.map((event) {
+    Map<dynamic, dynamic> data = Map<dynamic, dynamic>.from(event.snapshot.value as Map);
+    double api = data['api'].toDouble();
+    bool kebakaran = api == 0 ? true : false;
+    databaseReference.child('kebakaran').set(kebakaran);
+    return data;
+  });
   }
 
   String getFormattedTimeWithTimeZone() {

@@ -155,7 +155,7 @@ class DateTemperatureCard extends StatelessWidget {
                 children: [
                   _buildDetailColumn('Suhu', '${temperature.toStringAsFixed(1)}°C', WeatherIcons.thermometer, Colors.green, textScaleFactor),
                   _buildDetailColumn('Kelembapan', '${humidity.toStringAsFixed(0)}%', WeatherIcons.humidity, Colors.blue, textScaleFactor),
-                  _buildDetailColumn('API', '${api.toStringAsFixed(1)}%', WeatherIcons.fire, Colors.red, textScaleFactor),
+                  _buildDetailColumn('API', '${api.toStringAsFixed(1)}', WeatherIcons.fire, Colors.red, textScaleFactor),
                 ],
               ),
             ),
