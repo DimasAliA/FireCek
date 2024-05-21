@@ -65,22 +65,23 @@ class HomePage extends StatelessWidget {
     }
     return;
   }
-  String formatTemperatureChange(double temperature, double humidity, double api) {
-    return "${temperature.toStringAsFixed(1)}° - ${humidity.toStringAsFixed(1)}% - ${api.toStringAsFixed(1)}%";
+
+  String formatTemperatureChange(double temperature, double humidity, bool kebakaran) {
+    final status = kebakaran ? "Terdapat Api" : "Aman";
+    return "${temperature.toStringAsFixed(1)}°C - ${humidity.toStringAsFixed(0)}% - $status";
   }
 
   void addFireRecordToDatabase(Map<dynamic, dynamic> data) {
-    final kebakaran = data['kebakaran'];
+    final kebakaran = data['kebakaran'] as bool;
     final temperature = data['temperature'].toDouble();
     final humidity = data['humidity'].toDouble();
-    final api = data['api'].toDouble();
     
     if (kebakaran) {
       final now = DateTime.now();
       final String formattedDate = dateFormat.format(now);
       final String formattedTime = getFormattedTimeWithTimeZone();
       final String dayOfWeek = DateFormat('EEEE', 'id_ID').format(now);
-      final String temperatureChange = formatTemperatureChange(temperature, humidity, api);
+      final String temperatureChange = formatTemperatureChange(temperature, humidity, kebakaran);
 
       final DatabaseReference fireHistoryRef = FirebaseDatabase.instance.ref().child('fireHistory');
       final newFireHistoryKey = fireHistoryRef.push().key;
@@ -189,7 +190,7 @@ class HomePage extends StatelessWidget {
                                         time: time,
                                         temperature: data['temperature'].toDouble(),
                                         humidity: data['humidity'].toDouble(),
-                                        api: data['api'].toDouble(),
+                                        api: data['kebakaran'],
                                       );
                                     },
                                   ),
@@ -212,7 +213,7 @@ class HomePage extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error signing in: ${snapshot.error}'));
+            return Center(child: Text('Error:${snapshot.error}'));
           } else {
             return Center(child: CircularProgressIndicator());
           }
